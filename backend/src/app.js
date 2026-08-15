@@ -3,6 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const db = require("./config/db");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
@@ -28,7 +29,10 @@ app.get("/api/health", async (req, res) => {
             message: "API and database are connected"
         });
     } catch (error) {
-        console.error("Database connection failed:", error.message);
+        console.error(
+            "Database connection failed:",
+            error.message
+        );
 
         res.status(500).json({
             success: false,
@@ -36,5 +40,7 @@ app.get("/api/health", async (req, res) => {
         });
     }
 });
+
+app.use("/api/auth", authRoutes);
 
 module.exports = app;
