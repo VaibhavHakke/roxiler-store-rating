@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Production build
+dist/
+build/
+
+# Test coverage
+coverage/
+
+# OS generated files
+.DS_Store
