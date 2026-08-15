@@ -37,8 +37,26 @@ const findUserById = async (id) => {
     return rows[0];
 };
 
+const createUserByAdmin = async ({
+    name,
+    email,
+    password,
+    address,
+    role
+}) => {
+    const [result] = await db.execute(
+        `INSERT INTO users
+        (name, email, password, address, role)
+        VALUES (?, ?, ?, ?, ?)`,
+        [name, email, password, address, role]
+    );
+
+    return result.insertId;
+};
+
 module.exports = {
     findUserByEmail,
     createUser,
-    findUserById
+    findUserById,
+    createUserByAdmin
 };

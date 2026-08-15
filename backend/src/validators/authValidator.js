@@ -32,7 +32,10 @@ const validateRegisterData = ({
             "Password must contain at least one uppercase letter";
     }
 
-    if (password && !/[!@#$%^&*(),.?":{}|<>_\-\\[\]/+=;']/g.test(password)) {
+    if (
+        password &&
+        !/[!@#$%^&*(),.?":{}|<>_\-\\[\]/+=;']/g.test(password)
+    ) {
         errors.password =
             "Password must contain at least one special character";
     }
@@ -40,6 +43,34 @@ const validateRegisterData = ({
     return errors;
 };
 
+const validateAdminUserData = ({
+    name,
+    email,
+    address,
+    password,
+    role
+}) => {
+
+    const errors = validateRegisterData({
+        name,
+        email,
+        address,
+        password
+    });
+
+    const allowedRoles = [
+        "USER",
+        "ADMIN"
+    ];
+
+    if (!role || !allowedRoles.includes(role)) {
+        errors.role = "Role must be either USER or ADMIN";
+    }
+
+    return errors;
+};
+
 module.exports = {
-    validateRegisterData
+    validateRegisterData,
+    validateAdminUserData
 };
