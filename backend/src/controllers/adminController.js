@@ -1,11 +1,18 @@
-const adminService = require("../services/adminService");
+const adminService =
+    require("../services/adminService");
 
 const {
     validateAdminUserData
 } = require("../validators/authValidator");
 
+const {
+    validateCreateStoreData
+} = require("../validators/storeValidator");
+
 const getDashboard = async (req, res) => {
+
     try {
+
         const dashboardData =
             await adminService.getDashboardData();
 
@@ -23,7 +30,8 @@ const getDashboard = async (req, res) => {
 
         return res.status(500).json({
             success: false,
-            message: "Failed to fetch dashboard data"
+            message:
+                "Failed to fetch dashboard data"
         });
     }
 };
@@ -40,15 +48,18 @@ const createUser = async (req, res) => {
             role
         } = req.body;
 
-        const errors = validateAdminUserData({
-            name,
-            email,
-            address,
-            password,
-            role
-        });
+        const errors =
+            validateAdminUserData({
+                name,
+                email,
+                address,
+                password,
+                role
+            });
 
-        if (Object.keys(errors).length > 0) {
+        if (
+            Object.keys(errors).length > 0
+        ) {
             return res.status(400).json({
                 success: false,
                 errors
@@ -58,7 +69,9 @@ const createUser = async (req, res) => {
         const user =
             await adminService.createUser({
                 name: name.trim(),
-                email: email.trim().toLowerCase(),
+                email: email
+                    .trim()
+                    .toLowerCase(),
                 password,
                 address: address.trim(),
                 role
@@ -66,7 +79,8 @@ const createUser = async (req, res) => {
 
         return res.status(201).json({
             success: true,
-            message: "User created successfully",
+            message:
+                "User created successfully",
             user
         });
 
@@ -89,7 +103,8 @@ const createUser = async (req, res) => {
 
         return res.status(500).json({
             success: false,
-            message: "Failed to create user"
+            message:
+                "Failed to create user"
         });
     }
 };
@@ -107,8 +122,11 @@ const getUsers = async (req, res) => {
 
         if (
             role &&
-            !["USER", "ADMIN", "STORE_OWNER"]
-                .includes(role)
+            ![
+                "USER",
+                "ADMIN",
+                "STORE_OWNER"
+            ].includes(role)
         ) {
             return res.status(400).json({
                 success: false,
@@ -127,7 +145,9 @@ const getUsers = async (req, res) => {
 
         if (
             sortBy &&
-            !allowedSortColumns.includes(sortBy)
+            !allowedSortColumns.includes(
+                sortBy
+            )
         ) {
             return res.status(400).json({
                 success: false,
@@ -138,7 +158,10 @@ const getUsers = async (req, res) => {
 
         if (
             order &&
-            !["asc", "desc"].includes(
+            ![
+                "asc",
+                "desc"
+            ].includes(
                 order.toLowerCase()
             )
         ) {
@@ -176,7 +199,8 @@ const getUsers = async (req, res) => {
 
         return res.status(500).json({
             success: false,
-            message: "Failed to fetch users"
+            message:
+                "Failed to fetch users"
         });
     }
 };
@@ -188,9 +212,11 @@ const getUserById = async (req, res) => {
         const { id } = req.params;
 
         if (!/^\d+$/.test(id)) {
+
             return res.status(400).json({
                 success: false,
-                message: "User ID must be a valid number"
+                message:
+                    "User ID must be a valid number"
             });
         }
 
@@ -206,10 +232,14 @@ const getUserById = async (req, res) => {
 
     } catch (error) {
 
-        if (error.message === "User not found") {
+        if (
+            error.message ===
+            "User not found"
+        ) {
             return res.status(404).json({
                 success: false,
-                message: "User not found"
+                message:
+                    "User not found"
             });
         }
 
@@ -220,7 +250,98 @@ const getUserById = async (req, res) => {
 
         return res.status(500).json({
             success: false,
-            message: "Failed to fetch user details"
+            message:
+                "Failed to fetch user details"
+        });
+    }
+};
+
+const createStore = async (req, res) => {
+
+    try {
+
+        const {
+            name,
+            email,
+            address,
+            ownerId
+        } = req.body;
+
+        const errors =
+            validateCreateStoreData({
+                name,
+                email,
+                address,
+                ownerId
+            });
+
+        if (
+            Object.keys(errors).length > 0
+        ) {
+            return res.status(400).json({
+                success: false,
+                errors
+            });
+        }
+
+        const store =
+            await adminService.createStore({
+                name: name.trim(),
+                email: email
+                    .trim()
+                    .toLowerCase(),
+                address: address.trim(),
+                ownerId: Number(ownerId)
+            });
+
+        return res.status(201).json({
+            success: true,
+            message:
+                "Store created successfully",
+            store
+        });
+
+    } catch (error) {
+
+        if (
+            error.message ===
+            "Store email is already registered"
+        ) {
+            return res.status(409).json({
+                success: false,
+                message: error.message
+            });
+        }
+
+        if (
+            error.message ===
+            "Store owner not found"
+        ) {
+            return res.status(404).json({
+                success: false,
+                message: error.message
+            });
+        }
+
+        if (
+            error.message ===
+            "Selected user is not a store owner"
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: error.message
+            });
+        }
+
+        console.error(
+            "Create store error:",
+            error
+        );
+
+        return res.status(500).json({
+            success: false,
+            message:
+                "Failed to create store"
         });
     }
 };
@@ -229,5 +350,6 @@ module.exports = {
     getDashboard,
     createUser,
     getUsers,
-    getUserById
+    getUserById,
+    createStore
 };
