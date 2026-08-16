@@ -159,10 +159,13 @@ const getStores = async ({
             s.address,
             s.owner_id AS ownerId,
             u.name AS ownerName,
-            u.email AS ownerEmail
+            u.email AS ownerEmail,
+            COALESCE(AVG(r.rating), 0) AS rating
         FROM stores s
         INNER JOIN users u
             ON s.owner_id = u.id
+        LEFT JOIN ratings r
+            ON s.id = r.store_id
         WHERE 1 = 1
     `;
 
@@ -197,6 +200,7 @@ const getStores = async ({
         address: "s.address",
         ownerName: "u.name",
         ownerEmail: "u.email",
+        rating: "rating",
         createdAt: "s.created_at"
     };
 
@@ -208,6 +212,17 @@ const getStores = async ({
         order === "desc"
             ? "DESC"
             : "ASC";
+
+    query += `
+        GROUP BY
+            s.id,
+            s.name,
+            s.email,
+            s.address,
+            s.owner_id,
+            u.name,
+            u.email
+    `;
 
     query += `
         ORDER BY
