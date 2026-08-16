@@ -7,16 +7,29 @@ const validateRegisterData = ({
 
     const errors = {};
 
-    if (!name || name.trim().length < 20 || name.trim().length > 60) {
-        errors.name = "Name must be between 20 and 60 characters";
+    if (
+        !name ||
+        name.trim().length < 20 ||
+        name.trim().length > 60
+    ) {
+        errors.name =
+            "Name must be between 20 and 60 characters";
     }
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        errors.email = "Please provide a valid email address";
+    if (
+        !email ||
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    ) {
+        errors.email =
+            "Please provide a valid email address";
     }
 
-    if (!address || address.trim().length > 400) {
-        errors.address = "Address must not exceed 400 characters";
+    if (
+        !address ||
+        address.trim().length > 400
+    ) {
+        errors.address =
+            "Address must not exceed 400 characters";
     }
 
     if (
@@ -24,7 +37,8 @@ const validateRegisterData = ({
         password.length < 8 ||
         password.length > 16
     ) {
-        errors.password = "Password must be between 8 and 16 characters";
+        errors.password =
+            "Password must be between 8 and 16 characters";
     }
 
     if (password && !/[A-Z]/.test(password)) {
@@ -60,11 +74,16 @@ const validateAdminUserData = ({
 
     const allowedRoles = [
         "USER",
-        "ADMIN"
+        "ADMIN",
+        "STORE_OWNER"
     ];
 
-    if (!role || !allowedRoles.includes(role)) {
-        errors.role = "Role must be either USER or ADMIN";
+    if (
+        !role ||
+        !allowedRoles.includes(role)
+    ) {
+        errors.role =
+            "Role must be USER, ADMIN or STORE_OWNER";
     }
 
     return errors;
