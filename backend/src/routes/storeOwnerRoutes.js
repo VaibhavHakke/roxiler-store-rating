@@ -12,10 +12,7 @@ const {
 
 const router = express.Router();
 
-
-// ==========================================
-// STORE OWNER DASHBOARD
-// ==========================================
+//Store owner dashboard route
 
 router.get(
     "/dashboard",

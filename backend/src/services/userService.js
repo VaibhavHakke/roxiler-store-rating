@@ -143,10 +143,7 @@ const updateUserPassword = async ({
         throw error;
     }
 
-    /*
-     * We need the password hash.
-     * findUserByEmail returns the complete user row.
-     */
+// Fetch the full user record to get the hashed password
     const fullUser =
         await userModel.findUserByEmail(
             user.email

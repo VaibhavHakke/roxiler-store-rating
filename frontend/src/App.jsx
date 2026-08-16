@@ -5,10 +5,6 @@ const API_URL =
     import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 
-/* =========================================================
-   COMMON HELPERS
-========================================================= */
-
 const getToken = () =>
     localStorage.getItem("token");
 
@@ -93,10 +89,6 @@ const apiRequest = async (
 };
 
 
-/* =========================================================
-   VALIDATION
-========================================================= */
-
 const validateName = (name) => {
 
     if (name.length < 20) {
@@ -155,9 +147,6 @@ const validatePassword = (password) => {
 };
 
 
-/* =========================================================
-   APP
-========================================================= */
 
 function App() {
 
@@ -241,10 +230,6 @@ function App() {
     );
 }
 
-
-/* =========================================================
-   LOGIN
-========================================================= */
 
 function LoginPage({
     onLogin
@@ -473,11 +458,6 @@ function LoginPage({
     );
 }
 
-
-/* =========================================================
-   FORGOT PASSWORD
-========================================================= */
-
 function ForgotPasswordPage({
     onBack
 }) {
@@ -512,11 +492,6 @@ function ForgotPasswordPage({
     const [loading, setLoading] =
         useState(false);
 
-
-    /* -----------------------------------------
-       STEP 1
-       SEND OTP
-    ----------------------------------------- */
 
     const sendOtp = async (event) => {
 
@@ -576,12 +551,6 @@ function ForgotPasswordPage({
         }
     };
 
-
-    /* -----------------------------------------
-       STEP 2
-       VERIFY OTP
-    ----------------------------------------- */
-
     const verifyOtp = async (event) => {
 
         event.preventDefault();
@@ -637,12 +606,6 @@ function ForgotPasswordPage({
             setLoading(false);
         }
     };
-
-
-    /* -----------------------------------------
-       STEP 3
-       RESET PASSWORD
-    ----------------------------------------- */
 
     const resetPassword = async (event) => {
 
@@ -1010,11 +973,6 @@ function ForgotPasswordPage({
     );
 }
 
-
-/* =========================================================
-   SIGNUP
-========================================================= */
-
 function SignupPage({
     onBack
 }) {
@@ -1260,11 +1218,6 @@ function SignupPage({
     );
 }
 
-
-/* =========================================================
-   ADMIN
-========================================================= */
-
 function AdminDashboard({
     user,
     onLogout
@@ -1314,10 +1267,6 @@ function AdminDashboard({
     );
 }
 
-
-/* =========================================================
-   ADMIN OVERVIEW
-========================================================= */
 
 function AdminOverview() {
 
@@ -1485,11 +1434,6 @@ function AdminOverview() {
         </div>
     );
 }
-
-
-/* =========================================================
-   ADMIN USERS
-========================================================= */
 
 function AdminUsers() {
 
@@ -1819,11 +1763,6 @@ function AdminUsers() {
     );
 }
 
-
-/* =========================================================
-   ADMIN STORES
-========================================================= */
-
 function AdminStores() {
 
     const [stores, setStores] =
@@ -2108,11 +2047,6 @@ function AdminStores() {
     );
 }
 
-
-/* =========================================================
-   ADMIN ADD USER
-========================================================= */
-
 function AdminAddUser() {
 
     const [form, setForm] =
@@ -2371,11 +2305,6 @@ function AdminAddUser() {
         </FormPanel>
     );
 }
-
-
-/* =========================================================
-   ADMIN ADD STORE
-========================================================= */
 
 function AdminAddStore() {
 
@@ -2669,11 +2598,6 @@ function AdminAddStore() {
         </FormPanel>
     );
 }
-
-
-/* =========================================================
-   NORMAL USER
-========================================================= */
 
 function UserDashboard({
     user,
@@ -3245,11 +3169,6 @@ function UserDashboard({
     }
 }
 
-
-/* =========================================================
-   STORE OWNER
-========================================================= */
-
 function StoreOwnerDashboard({
     user,
     onLogout
@@ -3638,11 +3557,6 @@ function StoreOwnerDashboard({
     }
 }
 
-
-/* =========================================================
-   SHARED COMPONENTS
-========================================================= */
-
 function DashboardLayout({
     title,
     user,
@@ -3784,10 +3698,6 @@ function StatCard({
 }
 
 
-/* =========================================================
-   NORMAL INPUT
-========================================================= */
-
 function Field({
     label,
     type = "text",
@@ -3819,11 +3729,6 @@ function Field({
         </div>
     );
 }
-
-
-/* =========================================================
-   PASSWORD INPUT WITH SHOW/HIDE
-========================================================= */
 
 function PasswordField({
     label,

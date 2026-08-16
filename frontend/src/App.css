@@ -28,11 +28,6 @@ button:disabled {
     cursor: not-allowed;
 }
 
-
-/* =========================
-   AUTH
-========================= */
-
 .auth-page {
     min-height: 100vh;
     background: #f4f5f7;
@@ -117,11 +112,6 @@ button:disabled {
     align-items: center;
 }
 
-
-/* =========================
-   FORMS
-========================= */
-
 label {
     display: block;
     font-size: 13px;
@@ -197,11 +187,6 @@ textarea:focus {
     grid-column: 1 / -1;
 }
 
-
-/* =========================
-   ALERTS
-========================= */
-
 .alert {
     padding: 10px 12px;
     border-radius: 5px;
@@ -220,11 +205,6 @@ textarea:focus {
     color: #176b2c;
     border: 1px solid #c5e4ca;
 }
-
-
-/* =========================
-   DASHBOARD
-========================= */
 
 .dashboard {
     min-height: 100vh;
@@ -334,11 +314,6 @@ textarea:focus {
     display: none;
 }
 
-
-/* =========================
-   PAGE TITLE
-========================= */
-
 .page-title {
     margin-bottom: 22px;
 }
@@ -353,11 +328,6 @@ textarea:focus {
     color: #777;
     font-size: 14px;
 }
-
-
-/* =========================
-   STATS
-========================= */
 
 .stats-grid {
     display: grid;
@@ -384,11 +354,6 @@ textarea:focus {
     font-size: 25px;
 }
 
-
-/* =========================
-   PANELS
-========================= */
-
 .panel {
     background: #fff;
     border: 1px solid #ddd;
@@ -401,11 +366,6 @@ textarea:focus {
     margin: 0 0 16px;
     font-size: 17px;
 }
-
-
-/* =========================
-   FILTERS
-========================= */
 
 .filters {
     background: #fff;
@@ -424,11 +384,6 @@ textarea:focus {
 .filters select {
     width: 180px;
 }
-
-
-/* =========================
-   TABLES
-========================= */
 
 .table-container {
     background: #fff;
@@ -497,11 +452,6 @@ tr:hover td {
     color: #777;
 }
 
-
-/* =========================
-   INFO
-========================= */
-
 .info-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -525,11 +475,6 @@ tr:hover td {
     font-size: 13px;
 }
 
-
-/* =========================
-   PASSWORD
-========================= */
-
 .password-panel {
     max-width: 650px;
     margin-top: 20px;
@@ -539,11 +484,6 @@ tr:hover td {
     display: grid;
     gap: 4px;
 }
-
-
-/* =========================
-   MODAL
-========================= */
 
 .modal-overlay {
     position: fixed;
@@ -595,11 +535,6 @@ tr:hover td {
     gap: 8px;
     margin-top: 18px;
 }
-
-
-/* =========================
-   RESPONSIVE
-========================= */
 
 @media (max-width: 900px) {
 
@@ -693,10 +628,7 @@ tr:hover td {
         padding: 22px;
     }
 }
-
-/* =========================================================
-   PASSWORD FIELD
-========================================================= */
+// Password input
 
 .password-input-wrapper {
     position: relative;
@@ -728,10 +660,7 @@ tr:hover td {
     text-decoration: underline;
 }
 
-
-/* =========================================================
-   FORGOT PASSWORD
-========================================================= */
+// Forgot password
 
 .forgot-row {
     display: flex;
@@ -744,10 +673,7 @@ tr:hover td {
     margin: 18px auto 0;
 }
 
-
-/* =========================================================
-   PASSWORD RULE
-========================================================= */
+// Password rules
 
 .password-rule {
     font-size: 12px;

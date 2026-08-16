@@ -18,13 +18,7 @@ const {
 
 const db = require("../config/db");
 
-
-/*
-=========================================================
-GENERATE 6 DIGIT OTP
-=========================================================
-*/
-
+//OTP generation process
 const generateOTP = () => {
 
     return Math.floor(
@@ -34,11 +28,7 @@ const generateOTP = () => {
 };
 
 
-/*
-=========================================================
-FORGOT PASSWORD
-=========================================================
-*/
+//Forgot password functionality
 
 const forgotPassword = async (
     req,
@@ -67,12 +57,7 @@ const forgotPassword = async (
             );
 
 
-        /*
-        We intentionally return the same
-        response whether the email exists
-        or not.
-        */
-
+    
         if (!user) {
 
             return res.status(200).json({
@@ -82,26 +67,16 @@ const forgotPassword = async (
         }
 
 
-        /*
-        Invalidate previous OTPs
-        */
-
         await invalidateOldTokens(
             user.id
         );
 
 
-        /*
-        Generate OTP
-        */
+
 
         const otp =
             generateOTP();
 
-
-        /*
-        Hash OTP before storing it
-        */
 
         const otpHash =
             await bcrypt.hash(
@@ -110,9 +85,6 @@ const forgotPassword = async (
             );
 
 
-        /*
-        OTP expires after 10 minutes
-        */
 
         const expiresAt =
             new Date(
@@ -126,11 +98,6 @@ const forgotPassword = async (
             otpHash,
             expiresAt
         });
-
-
-        /*
-        Send OTP
-        */
 
         await sendPasswordResetOTP(
             user.email,
@@ -157,12 +124,7 @@ const forgotPassword = async (
     }
 };
 
-
-/*
-=========================================================
-VERIFY OTP
-=========================================================
-*/
+//verify OTP functionality
 
 const verifyResetOTP = async (
     req,
@@ -256,12 +218,7 @@ const verifyResetOTP = async (
     }
 };
 
-
-/*
-=========================================================
-RESET PASSWORD
-=========================================================
-*/
+//REset passwords
 
 const resetPassword = async (
     req,
@@ -290,9 +247,7 @@ const resetPassword = async (
         }
 
 
-        /*
-        Password validation
-        */
+       //password validation
 
         if (
             newPassword.length < 8 ||
@@ -362,15 +317,6 @@ const resetPassword = async (
         }
 
 
-        /*
-        Verify OTP again.
-
-        This is intentional.
-
-        We don't trust the frontend's
-        step-3 state.
-        */
-
         const validOTP =
             await bcrypt.compare(
                 otp.toString(),
@@ -387,10 +333,6 @@ const resetPassword = async (
         }
 
 
-        /*
-        Email must have been verified.
-        */
-
         if (!token.verified_at) {
 
             return res.status(400).json({
@@ -400,10 +342,6 @@ const resetPassword = async (
         }
 
 
-        /*
-        Hash new password
-        */
-
         const hashedPassword =
             await bcrypt.hash(
                 newPassword,
@@ -411,9 +349,6 @@ const resetPassword = async (
             );
 
 
-        /*
-        Update password
-        */
 
         await db.execute(
             `
@@ -427,10 +362,6 @@ const resetPassword = async (
             ]
         );
 
-
-        /*
-        Make OTP unusable.
-        */
 
         await markTokenUsed(
             token.id

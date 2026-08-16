@@ -1,11 +1,7 @@
 const storeOwnerService =
     require("../services/storeOwnerService");
 
-
-// ==========================================
-// STORE OWNER DASHBOARD
-// ==========================================
-
+//Store owner dashboard 
 const getDashboard = async (req, res) => {
 
     try {

@@ -61,16 +61,7 @@ const createUserByAdmin = async ({
     return result.insertId;
 };
 
-
-/*
- * Get all stores for a normal user.
- *
- * Returns:
- * - Store name
- * - Store address
- * - Overall rating
- * - Logged-in user's submitted rating
- */
+// Find a user by their email address.
 const getStoresForUser = async ({
     userId,
     search,
@@ -159,10 +150,7 @@ const getStoresForUser = async ({
     return rows;
 };
 
-
-/*
- * Find a store by ID.
- */
+// Find a store by its ID.
 const findStoreById = async (storeId) => {
 
     const [rows] = await db.execute(
@@ -180,10 +168,7 @@ const findStoreById = async (storeId) => {
     return rows[0];
 };
 
-
-/*
- * Find a user's rating for a particular store.
- */
+// Find a user's rating for a specific store.
 const findUserRating = async (
     userId,
     storeId
@@ -208,11 +193,7 @@ const findUserRating = async (
 
     return rows[0];
 };
-
-
-/*
- * Create a new rating.
- */
+// Create a new rating.
 const createRating = async ({
     userId,
     storeId,
@@ -233,10 +214,7 @@ const createRating = async ({
     return result.insertId;
 };
 
-
-/*
- * Update an existing rating.
- */
+// Update an existing rating.
 const updateRating = async ({
     userId,
     storeId,
@@ -259,10 +237,7 @@ const updateRating = async ({
     return result.affectedRows;
 };
 
-
-/*
- * Update user's password.
- */
+//update password
 const updatePassword = async (
     userId,
     password

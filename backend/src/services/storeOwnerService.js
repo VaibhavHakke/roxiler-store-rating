@@ -1,11 +1,6 @@
 const userModel =
     require("../models/userModel");
 
-
-// ==========================================
-// STORE OWNER DASHBOARD
-// ==========================================
-
 const getDashboard = async (ownerId) => {
 
     // Find the store owned by the logged-in user
