@@ -1,0 +1,16 @@
+warning: in the working copy of 'backend/package-lock.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/index.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/App.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/App.jsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/index.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/main.jsx', LF will be replaced by CRLF the next time Git touches it
+ backend/package-lock.json |   22 [32m+[m[31m-[m
+ backend/package.json      |   12 [32m+[m[31m-[m
+ backend/src/app.js        |    7 [32m+[m
+ frontend/index.html       |    2 [32m+[m[31m-[m
+ frontend/src/App.css      |  925 [32m++++++++[m[31m--[m
+ frontend/src/App.jsx      | 4278 [32m+++++++++++++++++++++++++++++++++++++++++++[m[31m--[m
+ frontend/src/index.css    |  114 [32m+[m[31m-[m
+ frontend/src/main.jsx     |   18 [32m+[m[31m-[m
+ 8 files changed, 4988 insertions(+), 390 deletions(-)

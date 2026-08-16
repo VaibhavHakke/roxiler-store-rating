@@ -7,6 +7,8 @@ const db = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 
+const passwordRoutes = require("./routes/passwordRoutes");
+
 const userRoutes = require("./routes/userRoutes");
 const storeOwnerRoutes =
     require("./routes/storeOwnerRoutes");
@@ -15,6 +17,11 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use(
+    "/api/auth",
+    passwordRoutes
+);
 
 app.use("/api/user", userRoutes);
 app.use(
