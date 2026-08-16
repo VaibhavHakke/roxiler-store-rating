@@ -8,6 +8,8 @@ const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 
 const userRoutes = require("./routes/userRoutes");
+const storeOwnerRoutes =
+    require("./routes/storeOwnerRoutes");
 
 const app = express();
 
@@ -15,7 +17,10 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/user", userRoutes);
-
+app.use(
+    "/api/store-owner",
+    storeOwnerRoutes
+);
 
 app.get("/", (req, res) => {
     res.json({

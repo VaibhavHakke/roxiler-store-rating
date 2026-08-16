@@ -282,12 +282,56 @@ const updatePassword = async (
     return result.affectedRows;
 };
 
+const findStoreByOwnerId = async (ownerId) => {
+
+    const [rows] = await db.execute(
+        `SELECT
+            id,
+            name,
+            email,
+            address,
+            owner_id
+         FROM stores
+         WHERE owner_id = ?`,
+        [ownerId]
+    );
+
+    return rows[0];
+};
+
+
+const getStoreRatingsByOwner = async (ownerId) => {
+
+    const [rows] = await db.execute(
+        `SELECT
+            r.id,
+            r.rating,
+            r.created_at,
+            r.updated_at,
+            u.id AS userId,
+            u.name AS userName,
+            u.email AS userEmail
+         FROM ratings r
+         INNER JOIN stores s
+            ON r.store_id = s.id
+         INNER JOIN users u
+            ON r.user_id = u.id
+         WHERE s.owner_id = ?
+         ORDER BY r.created_at DESC`,
+        [ownerId]
+    );
+
+    return rows;
+};
 
 module.exports = {
     findUserByEmail,
     createUser,
     findUserById,
     createUserByAdmin,
+
+findStoreByOwnerId,
+getStoreRatingsByOwner,
 
     getStoresForUser,
     findStoreById,
