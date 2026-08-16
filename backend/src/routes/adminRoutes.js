@@ -5,7 +5,8 @@ const {
     createUser,
     getUsers,
     getUserById,
-    createStore
+    createStore,
+    getStores
 } = require("../controllers/adminController");
 
 const authenticate =
@@ -49,6 +50,13 @@ router.post(
     authenticate,
     authorizeRoles("ADMIN"),
     createStore
+);
+
+router.get(
+    "/stores",
+    authenticate,
+    authorizeRoles("ADMIN"),
+    getStores
 );
 
 module.exports = router;

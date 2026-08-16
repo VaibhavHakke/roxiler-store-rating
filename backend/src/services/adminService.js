@@ -153,10 +153,24 @@ const createStore = async ({
     };
 };
 
+const getStores = async ({
+    search,
+    sortBy,
+    order
+}) => {
+
+    return await adminModel.getStores({
+        search,
+        sortBy,
+        order
+    });
+};
+
 module.exports = {
     getDashboardData,
     createUser,
     getUsers,
     getUserById,
-    createStore
+    createStore,
+    getStores
 };

@@ -346,10 +346,91 @@ const createStore = async (req, res) => {
     }
 };
 
+const getStores = async (req, res) => {
+
+    try {
+
+        const {
+            search,
+            sortBy,
+            order
+        } = req.query;
+
+        const allowedSortColumns = [
+            "name",
+            "email",
+            "address",
+            "ownerName",
+            "ownerEmail",
+            "createdAt"
+        ];
+
+        if (
+            sortBy &&
+            !allowedSortColumns.includes(
+                sortBy
+            )
+        ) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    "Invalid store sort field"
+            });
+        }
+
+        if (
+            order &&
+            ![
+                "asc",
+                "desc"
+            ].includes(
+                order.toLowerCase()
+            )
+        ) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    "Sort order must be asc or desc"
+            });
+        }
+
+        const stores =
+            await adminService.getStores({
+                search: search
+                    ? search.trim()
+                    : "",
+                sortBy,
+                order: order
+                    ? order.toLowerCase()
+                    : "asc"
+            });
+
+        return res.status(200).json({
+            success: true,
+            count: stores.length,
+            data: stores
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Get stores error:",
+            error
+        );
+
+        return res.status(500).json({
+            success: false,
+            message:
+                "Failed to fetch stores"
+        });
+    }
+};
+
 module.exports = {
     getDashboard,
     createUser,
     getUsers,
     getUserById,
-    createStore
+    createStore,
+    getStores
 };

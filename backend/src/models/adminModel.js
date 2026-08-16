@@ -145,10 +145,89 @@ const findStoreOwnerById = async (ownerId) => {
     return rows[0];
 };
 
+const getStores = async ({
+    search,
+    sortBy,
+    order
+}) => {
+
+    let query = `
+        SELECT
+            s.id,
+            s.name,
+            s.email,
+            s.address,
+            s.owner_id AS ownerId,
+            u.name AS ownerName,
+            u.email AS ownerEmail
+        FROM stores s
+        INNER JOIN users u
+            ON s.owner_id = u.id
+        WHERE 1 = 1
+    `;
+
+    const params = [];
+
+    if (search) {
+
+        query += `
+            AND (
+                s.name LIKE ?
+                OR s.email LIKE ?
+                OR s.address LIKE ?
+                OR u.name LIKE ?
+                OR u.email LIKE ?
+            )
+        `;
+
+        const searchValue = `%${search}%`;
+
+        params.push(
+            searchValue,
+            searchValue,
+            searchValue,
+            searchValue,
+            searchValue
+        );
+    }
+
+    const allowedSortColumns = {
+        name: "s.name",
+        email: "s.email",
+        address: "s.address",
+        ownerName: "u.name",
+        ownerEmail: "u.email",
+        createdAt: "s.created_at"
+    };
+
+    const selectedSortColumn =
+        allowedSortColumns[sortBy] ||
+        "s.created_at";
+
+    const selectedOrder =
+        order === "desc"
+            ? "DESC"
+            : "ASC";
+
+    query += `
+        ORDER BY
+            ${selectedSortColumn}
+            ${selectedOrder}
+    `;
+
+    const [rows] = await db.execute(
+        query,
+        params
+    );
+
+    return rows;
+};
+
 module.exports = {
     getDashboardCounts,
     getUsers,
     createStore,
     findStoreByEmail,
-    findStoreOwnerById
+    findStoreOwnerById,
+    getStores
 };
