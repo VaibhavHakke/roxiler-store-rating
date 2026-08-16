@@ -2,7 +2,8 @@ const express = require("express");
 
 const {
     getDashboard,
-    createUser
+    createUser,
+    getUsers
 } = require("../controllers/adminController");
 
 const authenticate =
@@ -25,6 +26,13 @@ router.post(
     authenticate,
     authorizeRoles("ADMIN"),
     createUser
+);
+
+router.get(
+    "/users",
+    authenticate,
+    authorizeRoles("ADMIN"),
+    getUsers
 );
 
 module.exports = router;

@@ -21,21 +21,24 @@ const createUser = async ({
     role
 }) => {
 
-    const existingUser = await userModel.findUserByEmail(email);
+    const existingUser =
+        await userModel.findUserByEmail(email);
 
     if (existingUser) {
         throw new Error("Email is already registered");
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword =
+        await bcrypt.hash(password, 10);
 
-    const userId = await userModel.createUserByAdmin({
-        name,
-        email,
-        password: hashedPassword,
-        address,
-        role
-    });
+    const userId =
+        await userModel.createUserByAdmin({
+            name,
+            email,
+            password: hashedPassword,
+            address,
+            role
+        });
 
     return {
         id: userId,
@@ -46,7 +49,23 @@ const createUser = async ({
     };
 };
 
+const getUsers = async ({
+    search,
+    role,
+    sortBy,
+    order
+}) => {
+
+    return await adminModel.getUsers({
+        search,
+        role,
+        sortBy,
+        order
+    });
+};
+
 module.exports = {
     getDashboardData,
-    createUser
+    createUser,
+    getUsers
 };

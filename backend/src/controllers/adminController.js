@@ -72,7 +72,10 @@ const createUser = async (req, res) => {
 
     } catch (error) {
 
-        if (error.message === "Email is already registered") {
+        if (
+            error.message ===
+            "Email is already registered"
+        ) {
             return res.status(409).json({
                 success: false,
                 message: error.message
@@ -91,7 +94,104 @@ const createUser = async (req, res) => {
     }
 };
 
+const getUsers = async (req, res) => {
+
+    try {
+
+        const {
+            search,
+            role,
+            sortBy,
+            order
+        } = req.query;
+
+        /*
+         * Validate role if it is provided.
+         */
+        if (
+            role &&
+            !["USER", "ADMIN", "STORE_OWNER"]
+                .includes(role)
+        ) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    "Invalid role. Allowed roles are USER, ADMIN and STORE_OWNER"
+            });
+        }
+
+        /*
+         * Validate sorting column.
+         */
+        const allowedSortColumns = [
+            "name",
+            "email",
+            "address",
+            "role",
+            "createdAt"
+        ];
+
+        if (
+            sortBy &&
+            !allowedSortColumns.includes(sortBy)
+        ) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    "Invalid sort field"
+            });
+        }
+
+        /*
+         * Validate sorting order.
+         */
+        if (
+            order &&
+            !["asc", "desc"].includes(
+                order.toLowerCase()
+            )
+        ) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    "Sort order must be asc or desc"
+            });
+        }
+
+        const users =
+            await adminService.getUsers({
+                search: search
+                    ? search.trim()
+                    : "",
+                role,
+                sortBy,
+                order: order
+                    ? order.toLowerCase()
+                    : "asc"
+            });
+
+        return res.status(200).json({
+            success: true,
+            count: users.length,
+            data: users
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Get users error:",
+            error
+        );
+
+        return res.status(500).json({
+            success: false,
+            message: "Failed to fetch users"
+        });
+    }
+};
+
 module.exports = {
     getDashboard,
-    createUser
+    createUser,
+    getUsers
 };
