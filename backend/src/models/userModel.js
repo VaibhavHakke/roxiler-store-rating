@@ -28,7 +28,14 @@ const createUser = async ({
 
 const findUserById = async (id) => {
     const [rows] = await db.execute(
-        `SELECT id, name, email, address, role, created_at, updated_at
+        `SELECT
+            id,
+            name,
+            email,
+            address,
+            role,
+            created_at,
+            updated_at
          FROM users
          WHERE id = ?`,
         [id]

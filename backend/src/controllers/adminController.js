@@ -105,9 +105,6 @@ const getUsers = async (req, res) => {
             order
         } = req.query;
 
-        /*
-         * Validate role if it is provided.
-         */
         if (
             role &&
             !["USER", "ADMIN", "STORE_OWNER"]
@@ -120,9 +117,6 @@ const getUsers = async (req, res) => {
             });
         }
 
-        /*
-         * Validate sorting column.
-         */
         const allowedSortColumns = [
             "name",
             "email",
@@ -142,9 +136,6 @@ const getUsers = async (req, res) => {
             });
         }
 
-        /*
-         * Validate sorting order.
-         */
         if (
             order &&
             !["asc", "desc"].includes(
@@ -190,8 +181,53 @@ const getUsers = async (req, res) => {
     }
 };
 
+const getUserById = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        if (!/^\d+$/.test(id)) {
+            return res.status(400).json({
+                success: false,
+                message: "User ID must be a valid number"
+            });
+        }
+
+        const user =
+            await adminService.getUserById(
+                Number(id)
+            );
+
+        return res.status(200).json({
+            success: true,
+            data: user
+        });
+
+    } catch (error) {
+
+        if (error.message === "User not found") {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        console.error(
+            "Get user details error:",
+            error
+        );
+
+        return res.status(500).json({
+            success: false,
+            message: "Failed to fetch user details"
+        });
+    }
+};
+
 module.exports = {
     getDashboard,
     createUser,
-    getUsers
+    getUsers,
+    getUserById
 };

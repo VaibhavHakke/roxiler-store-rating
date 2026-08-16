@@ -64,8 +64,20 @@ const getUsers = async ({
     });
 };
 
+const getUserById = async (id) => {
+
+    const user = await userModel.findUserById(id);
+
+    if (!user) {
+        throw new Error("User not found");
+    }
+
+    return user;
+};
+
 module.exports = {
     getDashboardData,
     createUser,
-    getUsers
+    getUsers,
+    getUserById
 };
